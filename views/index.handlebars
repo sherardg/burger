@@ -1,28 +1,101 @@
+    <div class="container">
+
+    <div class="jumbotron">
+        <h1 id="color-override">Eat Da Burger</h1>
+        <card>
+          
+          <h4 "text-center">Which burger do you want to eat?</h4>
+          <form class="button-size" action="/api/burgers" method="POST">
+              <input type="text" class="text-center" id="insertBurger" name="burger_name" placeholder="Insert Burger Name Here..."></input>
+              <span class="input-group-btn">
+                  <button type="submit" class="insertBurgerBtn btn btn-primary">Eat Me Now!</button>
+              </span>
+          </form>
+        </card>
+
+    {{!-- End Jumbotron --}}
+    </div>
+
+{{!-- Endo container --}}
+</div> 
+
+<div class="container">
+  <div class="row">
+        <!-- Undevoured Burgers -->
+        <div class="col-sm-6">
+            <div class="card card-default">
+                <div class="card-heading" id="lefthead"><strong>Burgers to Eat:</strong></div>
+                <div class="card-body" id="newBurger">
+                    {{#each burgers}} {{#unless this.devoured}}
+                  <form >
+                      <div class="input-group">
+                          <input type="hidden" name="devoured" value="true">
+                          <li class="form-control uneaten">{{this.burger_name}}</li>
+                          <span class="input-group-btn">
+                              <button class="eatBurger btn btn-info" data-id="{{id}}" type="submit">Devour It!</button>
+                          </span>
+                      </div>
+                  </form>
+                  {{/unless}} {{/each}}
+                    
+                </div>
+            </div>
+        </div>
+    
+        <!-- Devoured Burgers -->
+        <div class="col-sm-6">
+            <div class="card card-default">
+                <div class="card-heading" id="righthead"><strong>Devoured Burgers</strong></div>
+                <div class="card-body">
+                    {{#each burgers}} {{#if this.devoured}}
+                    <div>
+                        <li class="form-control devoured">{{this.burger_name}}</li>
+                    </div>
+                    {{/if}} {{/each}}
+                </div>
+                
+              </div>
+          </div>
+    </div>
+{{!-- End container --}}
+</div> 
+
 <div class="container">
     <div class="row">
-        <div class="col-sm-12 text-center" id="top">
-            <h1>Eat Da Burger</h1>
-        </div>
 
         <div class="col-sm-6 text-center" class="task">
             <div class="row">
-                {{#each burger_Data}}
-                {{!-- {{#unless this.devoured}} --}}
+                
+                    <p>{{#each burgers}} </p>
+                    <p> {{#unless this.devoured}}</p>
+            
+                
+               
             </div>
+             {{/unless}}
+            {{/each}} 
 
-            <div class="col-sm-9 text-center">
-                <pre>{{this.id}}. {{this.burger_name}}</pre>
-            </div>
+         
 
-            <div class="col-sm-3 text-center">
-                <form method="POST" action="/burgers/update?_method=PUT" class="button-size">
-                    <input type="hidden" name="burger_id" type="text" value={{this.id}}> <br>
-                        <button type="submit" class="btn btn-default">DEVOUR IT!</button>
-                        </form>
-            </div>
-             {{!-- {{/unless}} --}}
-            {{/each}}
+            
+            
             </div>
         </div>
+
+        
+
     </div>
-</div>
+</div> 
+<script>
+$(".eatBurger").click(function(event){
+    event.preventDefault()
+    let id = $(this).attr("data-id")
+    console.log(id)
+    $.ajax({
+        url:'/api/burgers/'+id,
+        type:'PUT',
+    }).then(function(info){
+        location.reload()
+    })
+})
+</script>

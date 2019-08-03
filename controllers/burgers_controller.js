@@ -1,48 +1,62 @@
 var express = require ("express"); 
 var router = express.Router(); 
-var burgers = require ("../models/burger");
+var burgers = require ("../models/burger.js");
 
 // CREATE THE ROUTER 
 
 // GET ROUTE TO DISPLAY ALL THE BURGERS IN THE DB 
 router.get ("/", function (req, res) {
-    burgers.all(function(burgerData) {
-        console.log("burger_name"); 
-        // console.log(res);
-        res.render("index",{burger_Data: burgerData});         
+    burgers.all(function(data) {
+        var hbsObject = {
+            burgers: data
+        };
+        console.log(hbsObject);         
+        res.render("index", hbsObject);       
     });
 });
 
-// // POST ROUTE TO UPDATE A BURGER WHEN ITS EATEN OR REMADE 
-// router.post("/api/burgers/:id", function (req, res) {
-//     burger.create(["burger_name", "devoured"], [req.body.burger_name, req.body.devoured], function(result){
-//         res.json({ id: result.insertID });
-//         console.log(req.body); 
-//     });
-//     });
 
+// POST ROUTE TO UPDATE A BURGER WHEN ITS EATEN OR REMADE 
+router.post("/api/burgers", function(req, res){
+    burgers.create(
+        ["burger_name", "devoured"],[req.body.burger_name, false/////here
+            // req.body.devoured
+        ],
+    function(result){ ////here
+        // res.json({id: result.insertId});
+        res.redirect("/")
+    });
+    // console.log(result);
+});
 
-//     burger.updateBurgers(
-//         req.body.devoured, condition, function (result) { 
-//             console.log(result); 
-//         if (result.changedRows === 0) {
-//             return res.status(200).end(); 
-//         }
-//         else {
-//             res.status(200).end(); 
-//         }
-//     }); 
+router.put("/api/burgers/:id", function(req, res) {
+    var condition = "id = " + req.params.id;
+    console.log("condition", condition);
 
-// // POST TO ADD A NEW BURGER 
-// router.post("/api/burgers", function (req, res) {
-//     burger.addBurgers([
-//         "burger_name", "devoured" 
-//     ], 
-//     [req.body.name, req.body.devoured], 
-//     function (result) {
-//         res.json({ id: result.insertId})
-//     }); 
-// }); 
+    burgers.update({
+        devoured: req.body.devoured
+    }, condition, function(result){
+            if (result.changedRows == 0){
+                //If NO ROWS WERE CHANGED, THEN THE ID MUST NOT EXSIST, SO 404 error
+                return res.status(404).end();
+            } else {
+                res.status(200).end();
+            }
+        });
+});
+
+router.delete("/api/burgers/:id", function(req, res) {
+    var condition = "id = " + req.params.id;
+
+    burgers.delete(condition, function(result) {
+        if (result.affectedRows == 0) {
+            //If NO ROWS WERE CHANGED, THEN THE ID MUST NOT EXSIST, SO 404 error
+            return res.status(404).end();
+        } else {
+            res.status(200).end();
+        }
+    });
+});
 
 
 // EXPORT 
