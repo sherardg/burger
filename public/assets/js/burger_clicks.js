@@ -1,13 +1,16 @@
 // CLICK HANDLER 
+$ (document).ready(function(){
 
 $(function () {
     // FUNCTION THAT LISTENS FOR THE EAT BURGER CLICK 
     $(".eat-burger").on("click", function (){
         console.log("Your ready to eat.")
         var id = $(this).data("id"); 
+        var burger_name = $(this).data("burger_name");
         var devoured = $(this).data("devoured"); 
 
         var newDevouredState = {
+            burger: burger_name,
             devoured: devoured, 
         }; 
         console.log(newDevouredState); 
@@ -49,7 +52,6 @@ $(function () {
     // CLICK HANDLER FOR ADDING A NEW BURGER 
     $(".add-new").on("click", function (event) {
         // event.preventdefault(); 
-        console.log("you're trying to add"); 
 
         var newBurger = {
             name: $(".add-new").val(), 
@@ -65,9 +67,11 @@ $(function () {
         .then(
             function (){ 
                 console.log("new burger added"); 
-                // location.reload()
+                location.reload()
             }
         )
     
     });
+})
+
 });

@@ -1,14 +1,16 @@
     <div class="container">
 
     <div class="jumbotron">
-        <h1 id="color-override">Eat Da Burger</h1>
+        <h1 class="title">Eat Da Burger</h1>
         <card>
+            <img src="/public/assets/img/burger.png" alt"burger" class="img-fluid float-right">
           
           <h4 "text-center">Which burger do you want to eat?</h4>
           <form class="button-size" action="/api/burgers" method="POST">
-              <input type="text" class="text-center" id="insertBurger" name="burger_name" placeholder="Insert Burger Name Here..."></input>
+              <input type="text" class="text-center" id="insertBurger" name="burger_name" placeholder="Insert Burger Name"></input>
               <span class="input-group-btn">
-                  <button type="submit" class="insertBurgerBtn btn btn-primary">Eat Me Now!</button>
+                  <button type="submit" class="insertBurgerBtn btn btn-success">
+                      Add to Menu!</button>
               </span>
           </form>
         </card>
@@ -16,27 +18,32 @@
     {{!-- End Jumbotron --}}
     </div>
 
-{{!-- Endo container --}}
+{{!-- End container --}}
 </div> 
 
 <div class="container">
   <div class="row">
         <!-- Undevoured Burgers -->
         <div class="col-sm-6">
-            <div class="card card-default">
-                <div class="card-heading" id="lefthead"><strong>Burgers to Eat:</strong></div>
+            <div class="card">
+                <div class="card-header bg-warning mb-3"><h2>Burgers Menu:</h2></div>
                 <div class="card-body" id="newBurger">
-                    {{#each burgers}} {{#unless this.devoured}}
-                  <form >
-                      <div class="input-group">
-                          <input type="hidden" name="devoured" value="true">
-                          <li class="form-control uneaten">{{this.burger_name}}</li>
-                          <span class="input-group-btn">
-                              <button class="eatBurger btn btn-info" data-id="{{id}}" type="submit">Devour It!</button>
-                          </span>
-                      </div>
-                  </form>
-                  {{/unless}} {{/each}}
+                    
+                        {{#each burgers}}  {{#unless this.devoured}}
+
+                    <form class="button-size" action="/api/burgers" method="POST">
+                        <div class="input-group">
+                            <input type="hidden" name="devoured" value="true">
+                            <li class="form-control uneaten">{{this.burger_name}}</li>
+                            <span class="input-group-btn">
+                                <button class="eatBurger btn btn-info" data-id="{{id}}" type="submit">Devour It!</button>
+                            </span>
+                        </div>
+                    </form>
+                
+
+                  {{/unless}} 
+                  {{/each}}
                     
                 </div>
             </div>
@@ -44,48 +51,28 @@
     
         <!-- Devoured Burgers -->
         <div class="col-sm-6">
-            <div class="card card-default">
-                <div class="card-heading" id="righthead"><strong>Devoured Burgers</strong></div>
+            <div class="card">
+                <div class="card-header bg-danger mb-3"><h2>Devoured Burgers</h2></div>
                 <div class="card-body">
-                    {{#each burgers}} {{#if this.devoured}}
-                    <div>
-                        <li class="form-control devoured">{{this.burger_name}}</li>
-                    </div>
-                    {{/if}} {{/each}}
+         
+                    {{#each burgers}} 
+                    {{#if this.devoured}}
+               <div>
+                <li class="form-control devoured">{{this.burger_name}}</li>
+            </div>
+                   
+                    {{/if}} 
+                    {{/each}}
+                    
                 </div>
                 
               </div>
           </div>
-    </div>
+    
 {{!-- End container --}}
-</div> 
+</div>
+</div>
 
-<div class="container">
-    <div class="row">
-
-        <div class="col-sm-6 text-center" class="task">
-            <div class="row">
-                
-                    <p>{{#each burgers}} </p>
-                    <p> {{#unless this.devoured}}</p>
-            
-                
-               
-            </div>
-             {{/unless}}
-            {{/each}} 
-
-         
-
-            
-            
-            </div>
-        </div>
-
-        
-
-    </div>
-</div> 
 <script>
 $(".eatBurger").click(function(event){
     event.preventDefault()
