@@ -47,25 +47,4 @@ router.post("/api/burgers", function(req, res) {
   );
 });
 
-// router.put("/api/burgers/update", function(req, res) {
-//   burgers.update(req.body.burger_id, function(result) {
-//     console.log(result);
-//     res.redirect("/");
-//   });
-// });
-
-// router.delete("/api/burgers/:id", function(req, res) {
-//     var condition = "id = " + req.params.id;
-
-//     burgers.delete(condition, function(result) {
-//         if (result.affectedRows == 0) {
-//             //If NO ROWS WERE CHANGED, THEN THE ID MUST NOT EXSIST, SO 404 error
-//             return res.status(404).end();
-//         } else {
-//             res.status(200).end();
-//         }
-//     });
-// });
-
-// EXPORT
 module.exports = router;

@@ -1,9 +1,10 @@
+
 body {
-    /* background-image: url("../img/gradient-bgr.png");
-    background-repeat: repeat-x; */
+    background-image: url("../img/gradient-bgr.png");
+    background-repeat: repeat-x;
     background-color: black;
 }
-h1.title{
+.title{
     font-family: 'Saira Stencil One', cursive;
     font-size: 28px;
 }
