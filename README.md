@@ -18,7 +18,7 @@ This app is the first one I've built using the Model View Controller (MVC) desig
 - Handlebars
 - Homemade Object Relational Mapper (ORM)
 
-* This app is deployed using Heroku - https://lit-tundra-92141.herokuapp.com/
+## This app is deployed using Heroku - https://lit-tundra-92141.herokuapp.com/
 
 **Enjoy** - Which burger (or burgers) do you want to eat? 
 
